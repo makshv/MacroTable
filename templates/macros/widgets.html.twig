@@ -1,0 +1,36 @@
+{% macro label(title, type, tooltip) %}
+    {# success, warning, danger, primary #}
+    <span {% if tooltip %}data-toggle="tooltip" data-placement="top" title="{{ tooltip }}" {% endif %}class="label label-{{ type|default('success') }}">{{ title|trans }}</span>
+{% endmacro %}
+
+{% macro label_boolean(visible, type = 'success') %}
+    {% import _self as macro %}
+    {% if visible %}
+        {{ macro.label('YES', type) }}
+    {% else %}
+        {{ macro.label('NO', 'default') }}
+    {% endif %}
+{% endmacro %}
+
+{% macro label_warning(visible, type = 'success') %}
+    {% import _self as macro %}
+    {% if visible %}
+        {{ macro.label('YES', type) }}
+    {% else %}
+        {{ macro.label('NO', 'warning') }}
+    {% endif %}
+{% endmacro %}
+
+{% macro hidden(settings, column) %}
+    {% if column in settings.hide %}
+        class="hidden"
+    {% endif %}
+{% endmacro %}
+
+{% macro callout(type, description, title, icon) %}
+    <div class="callout callout-{{ type|default('danger') }} lead">
+        <p>{{ description|trans }}</p>
+    </div>
+{% endmacro %}
+
+

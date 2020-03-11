@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% import "macros/components.html.twig" as components %}
+
+{% block page_title%}Table Component Example{% endblock %}
+
+{% block body %}
+    {% set data =
+        {
+            'tableAlias': 'ms',
+            'tableCode': tableCode,
+            'backUrl': 'message.list',
+            'tableSettings': {'hide': null, 'limit': 1000},
+            'entities': messages,
+            'columns':
+            {
+                'id': {'header': 'Id', 'isSortable': false},
+                'subject': {'header': 'Subject', 'isSortable': false},
+                'message': {'header': 'Message', 'isSortable': false},
+                'dateCreate': {'header': 'Date create', 'isSortable': false},
+            },
+            'tableData': []
+        } %}
+    {% set tableData = [] %}
+    {% for message in messages %}
+        {% set message = message._toArray() %}
+        {% set tableData = tableData | merge(
+            [
+                {
+                    'id': message.id,
+                    'subject': message.subject,
+                    'message': message.text,
+                    'dateCreate': message.dateCreate|date("d/m/Y H:i:s", false),
+                }
+            ]) %}
+    {% endfor %}
+    {% set data = data | merge({'tableData': tableData}) %}
+
+{#  Display component #}
+    {{ components.table(data) }}
+{% endblock %}
