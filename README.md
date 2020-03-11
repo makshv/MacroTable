@@ -1,3 +1,7 @@
+#### About 
+This example shows how to use macros when creating tables in Twig (Symfony 4).
+It can also be easily expanded by adding pagination, sorting, etc.
+
 #### Deploy
 
 1. In project dir run:
